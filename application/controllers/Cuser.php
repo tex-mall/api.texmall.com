@@ -11,6 +11,7 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Cuser extends CI_Controller {
+    private $table = 'user';
     
 	public function _init()
 	{
@@ -26,39 +27,15 @@ class Cuser extends CI_Controller {
 	 * */
 	public function check_login()
 	{
-	    $where['mobile'] = trim($this->input->post('mobile'));
+	    $where['mobile']   = trim($this->input->post('mobile'));
 	    $where['password'] = ZD_md5($this->input->post('password'));
-	    $res = $this->Base_model->getWhere('user', $where);
+	    $res = $this->Base_model->getWhere($this->table, $where);
 	    if ($res->num_rows()>0) {
 	        getJson(0, $res->row());
 	    }
 	    
 	    getJson(1003);
 	}
-	
-	/**
-	 * @验证码
-	 * */
-	public function get_captcha()
-	{
-	    $this->load->helper('captcha');
-	    $word = randomStr(4, 3);
-	    $config = array(
-	        'word'       => $word,
-	        'img_path'   => $this->config->upload_image_path('captcha', TRUE),
-	        'img_url'    => $this->config->image_url.'captcha/',
-	        'font_path'  => 'assets/plugins/YHBold.ttf',
-	        'img_width'  => 80,
-	        'img_height' => 30,
-	        'expiration' => '1200',
-	    );
-	    $captcha = create_captcha($config);
-	    $this->input->set_cookie('captcha', $captcha['word'], 600);
-	    echo json_encode($captcha);
-	}
-	
-	
-	
 	
 	
 }

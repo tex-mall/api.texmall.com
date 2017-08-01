@@ -5,9 +5,9 @@
 
 /**
  * @错误数组
- * @param string/int $errcode：错误码
- * @param boolean $errmsg：错误描述
- * @param mix $data：数据
+ * @param int $errcode：错误码
+ * @param string $errmsg：错误描述
+ * @param mixed $data：数据
  * */
 function getJson($index=0, $data=null) 
 {
